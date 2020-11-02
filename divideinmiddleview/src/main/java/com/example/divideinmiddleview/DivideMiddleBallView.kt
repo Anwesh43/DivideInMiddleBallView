@@ -189,8 +189,10 @@ class DivideMiddleBallView(ctx : Context) : View(ctx) {
         fun render(canvas : Canvas) {
             canvas.drawColor(backColor)
             dmb.draw(canvas, paint)
-            dmb.update {
-                animator.stop()
+            animator.animate {
+                dmb.update {
+                    animator.stop()
+                }
             }
         }
 
