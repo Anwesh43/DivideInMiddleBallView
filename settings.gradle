@@ -1,0 +1,3 @@
+include ':divideinmiddleview'
+include ':app'
+rootProject.name = "LinkedBallDivideInMiddleView"
