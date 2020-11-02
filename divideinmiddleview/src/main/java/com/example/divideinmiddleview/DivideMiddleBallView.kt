@@ -28,3 +28,25 @@ fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
 fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale(i, n)) * n
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
+
+fun Canvas.drawDivideMiddleBall(scale : Float, w : Float, h : Float, paint : Paint) {
+    val r : Float = Math.min(w, h) / rFactor
+    val sf : Float = scale.sinify()
+    save()
+    translate(w / 2, r + (h / 2 - r) * sf.divideScale(1, parts))
+    for (j in 0..2) {
+        val sfj : Float = sf.divideScale(2, parts)
+        val gap : Float = (w / 2 - r) * (j - 1)
+        drawCircle(gap * sfj, (h / 2 - r) * sfj, r * sf.divideScale(0, parts), paint)
+    }
+    restore()
+}
+
+fun Canvas.drawDMBNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    paint.color = colors[i]
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
+    drawDivideMiddleBall(scale, w, h, paint)
+}
